@@ -1,0 +1,40 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Juliet Oma",
+      "email": "julie@yahoo.com",
+      "password": "1234"
+    },
+    {
+      "id": 2,
+      "name": "James Williams",
+      "email": "jameswilly@gmail.com",
+      "password": "08111111111"
+    },
+    {
+      "id": 3,
+      "name": "Ahmed Ali",
+      "email": "ahmedali012@gmail.com",
+      "password": "09022222222"
+    },
+    {
+      "id": 4,
+      "name": "Grace Funsho",
+      "email": "gracefunsho@gmail.com",
+      "password": "09033333333"
+    },
+    {
+      "id": "caa3",
+      "name": "arajita",
+      "email": "sdnf@gmail.com",
+      "password": "1234"
+    },
+    {
+      "id": "ab68",
+      "name": " call recive kara",
+      "email": "s@gmail.com",
+      "password": "1234"
+    }
+  ]
+}

@@ -1,25 +1,56 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 
 export const DataContext = createContext();
 
-const Login = () => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const router = useRouter();
-  const submitForm = (e) => {
-    e.preventDefault();
-    const dbEmail = Cookies.get("email");
-    const dbPass = Cookies.get("password");
+const url = "http://localhost:8000/users"
 
-    if (email === dbEmail && password === dbPass) {
-      router.push("/home");
-    } else {
-      alert("No account on this id password");
-      setEmail("");
-      setPassword("");
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [users, setUsers] = useState([])
+  const router = useRouter();
+
+  useEffect(() => {
+    fetch(url)
+                .then(res => {
+                    if (!res.ok) {
+                        throw Error('Error fetching users data');
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                  setUsers(data);
+                })
+                .catch(err => {
+                    console.log(err)
+                });
+  }, []);
+  useEffect(() => {
+    // console.log()
+    if(JSON.parse(localStorage.getItem("cuser")) !== null){
+      router.replace("/home")
     }
+  })
+  const submitForm = async (e) => {
+    e.preventDefault();
+    const isUserExist = users.filter((user) => user.email === email)
+    if(isUserExist.length !== 0){
+      if(isUserExist[0].password === password){
+        router.replace("/home");
+        localStorage.setItem("cuser", JSON.stringify(isUserExist[0]))
+      }
+      else{
+        console.log("User doesn't exist.")
+  
+      }
+    } else{
+      console.log("User doesn't exist.")
+
+    }
+    
+    
   };
   return (
     <DataContext.Provider value={{ email, password }}>

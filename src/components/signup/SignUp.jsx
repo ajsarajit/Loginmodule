@@ -2,20 +2,38 @@ import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useEffect } from "react";
+
+const url = "http://localhost:8000/users"
 
 function SignUp() {
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const router = useRouter();
+
+  useEffect(() => {
+    // console.log()
+    if(JSON.parse(localStorage.getItem("cuser")) !== null){
+      router.replace("/home")
+    }
+  })
 
   const submitForm = (e) => {
     e.preventDefault();
-    console.log(name, email, password);
-    Cookies.set("name", name);
-    Cookies.set("email", email);
-    Cookies.set("password", password);
-    router.push("/login");
+    fetch(url, {
+      method: 'POST',
+      headers: {
+         'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+         'name': name,
+         'email': email,
+         'password': password
+      })
+  }).then(response => response.json())
+  .then(newPerson => console.log(newPerson))
+    router.replace("/login");
   };
   return (
     <div>
